@@ -67,9 +67,9 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
-        String recipient= (String) entity.getProperty("recipient");
+        String recipient = (String) entity.getProperty("recipient");
         
-        Message message = new Message(id, user, text, timestamp,recipient);
+        Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
