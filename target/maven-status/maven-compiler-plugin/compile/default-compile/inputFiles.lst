@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/servlets/LoginServlet.java
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/data/Datastore.java
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/servlets/LoginStatusServlet.java
@@ -5,3 +6,12 @@
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/servlets/LogoutServlet.java
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/data/Message.java
 /Users/ricardoramirez/Dev/CodeU/CodeU-T5/src/main/java/com/google/codeu/servlets/MessageServlet.java
+=======
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/data/Datastore.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/servlets/LogoutServlet.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/servlets/AboutMeServlet.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/data/Message.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/servlets/LoginStatusServlet.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/servlets/LoginServlet.java
+/Users/davidgonzales/Desktop/CodeU-T5/src/main/java/com/google/codeu/servlets/MessageServlet.java
+>>>>>>> eddd951933862c1d8190bae4bdb1b2b04b29fa78
