@@ -42,7 +42,6 @@ function showMessageFormIfViewingSelf() {
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
-          console.log("Not me");
           document.getElementById('about-me-form').classList.remove('hidden');
         }
       });

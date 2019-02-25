@@ -1,18 +1,11 @@
-<<<<<<< HEAD
-<!-- Indices written at Thu, 21 Feb 2019 18:16:22 CST -->
-=======
-<!-- Indices written at Sat, 23 Feb 2019 20:05:39 MST -->
->>>>>>> eddd951933862c1d8190bae4bdb1b2b04b29fa78
+<!-- Indices written at Sun, 24 Feb 2019 22:35:45 CST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
-<<<<<<< HEAD
-=======
-    <!-- Used 3 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Message" ancestor="false" source="auto">
         <property name="user" direction="asc"/>
         <property name="timestamp" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>
->>>>>>> eddd951933862c1d8190bae4bdb1b2b04b29fa78

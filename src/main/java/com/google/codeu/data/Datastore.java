@@ -92,7 +92,7 @@ public List<Message> createMessage(PreparedQuery results){
     String text = (String) entity.getProperty("text");
     long timestamp = (long) entity.getProperty("timestamp");
 
-    Message message = new Message(id, user, text, timestamp);
+    Message message = new Message(id, user, text, timestamp, " ");
     messages.add(message);
    } catch (Exception e) {
     System.err.println("Error reading message.");
