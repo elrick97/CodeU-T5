@@ -23,6 +23,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.FetchOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +43,7 @@ public class Datastore {
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
-
+    messageEntity.setProperty("recipient", message.getRecipient());
     datastore.put(messageEntity);
   }
 
@@ -53,7 +54,6 @@ public class Datastore {
    *     message. List is sorted by time descending.
    */
   public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
 
     Query query =
         new Query("Message")
@@ -61,22 +61,86 @@ public class Datastore {
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    for (Entity entity : results.asIterable()) {
-      try {
-        String idString = entity.getKey().getName();
-        UUID id = UUID.fromString(idString);
-        String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("timestamp");
-
-        Message message = new Message(id, user, text, timestamp);
-        messages.add(message);
-      } catch (Exception e) {
-        System.err.println("Error reading message.");
-        System.err.println(entity.toString());
-        e.printStackTrace();
-      }
-    }
-
-    return messages;
+    return createMessage(results);
   }
+  /*
+   * Fetch messages from all users
+   *
+   * @return a list of messages posted by all the users, or empty list if there are no messages at all.
+   * List is sorted by time descending.
+   * */
+  public List<Message> getAllMessages(){
+  Query query = new Query("Message")
+    .addSort("timestamp", SortDirection.DESCENDING);
+  PreparedQuery results = datastore.prepare(query);
+
+  return createMessage(results);
+ }
+/*
+ * Creating the message
+ *
+	 * @return a list of messages.
+ * */
+public List<Message> createMessage(PreparedQuery results){
+  List<Message> messages = new ArrayList<>();
+   for (Entity entity : results.asIterable()) {
+
+   try {
+    String idString = entity.getKey().getName();
+    UUID id = UUID.fromString(idString);
+    String user = (String) entity.getProperty("user");
+    String text = (String) entity.getProperty("text");
+    long timestamp = (long) entity.getProperty("timestamp");
+
+    Message message = new Message(id, user, text, timestamp, " ");
+    messages.add(message);
+   } catch (Exception e) {
+    System.err.println("Error reading message.");
+    System.err.println(entity.toString());
+    e.printStackTrace();
+   }
+  }
+    return messages;
+ }
+
+
+
+  /** Returns the total number of messages for all users. */
+  public int getTotalMessageCount(){
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+    return results.countEntities(FetchOptions.Builder.withLimit(1000));
+  }
+}
+
+
+
+
+
+/** Stores the User in Datastore. */
+public void storeUser(User user) {
+ Entity userEntity = new Entity("User", user.getEmail());
+ userEntity.setProperty("email", user.getEmail());
+ userEntity.setProperty("aboutMe", user.getAboutMe());
+ datastore.put(userEntity);
+}
+
+/**
+ * Returns the User owned by the email address, or
+ * null if no matching User was found.
+ */
+public User getUser(String email) {
+
+ Query query = new Query("User")
+   .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+ PreparedQuery results = datastore.prepare(query);
+ Entity userEntity = results.asSingleEntity();
+ if(userEntity == null) {
+  return null;
+ }
+
+ String aboutMe = (String) userEntity.getProperty("aboutMe");
+ User user = new User(email, aboutMe);
+
+ return user;
 }
