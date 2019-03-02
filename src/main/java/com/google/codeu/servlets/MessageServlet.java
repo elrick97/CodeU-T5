@@ -51,7 +51,7 @@ public class MessageServlet extends HttpServlet {
     response.setContentType("application/json");
 
     String user = request.getParameter("user");
-    
+
 
     if (user == null || user.equals("")) {
       // Request is invalid, return empty array
@@ -79,6 +79,8 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
+
+    String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
 
     Message message = new Message(user, text, recipient);
     datastore.storeMessage(message);
