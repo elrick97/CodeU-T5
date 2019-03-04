@@ -90,7 +90,7 @@ public List<Message> createMessage(PreparedQuery results){
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
         String user= (String) entity.getProperty("user");
-        
+        String recipient = (String) entity.getProperty("recipient");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
         
