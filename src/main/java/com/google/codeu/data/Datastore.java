@@ -83,7 +83,7 @@ public class Datastore {
  *
 	 * @return a list of messages.
  * */
-public List<Message> createMessage(PreparedQuery results){
+protected List<Message> createMessage(PreparedQuery results){
   List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       try {
