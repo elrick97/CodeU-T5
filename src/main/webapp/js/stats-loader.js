@@ -1,10 +1,10 @@
 /**Fetch stats and display them in the page.*/
 function fetchStats() {
     const url = '/stats';
-    fetch(url).then((response) = > {
+    fetch(url).then((response) => {
         return response.json();
 }).
-    then((stats) = > {
+    then((stats) => {
         const statsContainer = document.getElementById('stats-container');
     statsContainer.innerHTML = '';
 
