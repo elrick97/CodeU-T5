@@ -79,9 +79,6 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String recipient = request.getParameter("recipient");
-
-    String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
-
     Message message = new Message(user, text, recipient);
     datastore.storeMessage(message);
 
