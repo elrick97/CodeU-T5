@@ -96,7 +96,7 @@ function buildMessageDiv(message) {
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = isBlockCode(message.text);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
@@ -105,6 +105,20 @@ function buildMessageDiv(message) {
 
   return messageDiv;
 }
+
+function isBlockCode(message) {
+  var str = message;
+  var patt1 = /```(.*)```/s;
+  var result = str.match(patt1);
+  if (result != null) {
+    message = message.replace(/```/s, "<pre class=\"prettyprint\"><code>").replace(/```/s, "</code></pre>");
+    return message;
+  }else{
+    return message;
+  }
+}
+
+
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {

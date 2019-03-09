@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import java.lang.StringBuffer;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -77,9 +78,19 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), Whitelist.relaxed());
+
+    StringBuffer text = new StringBuffer(request.getParameter("text"));
+
+    int loc = (new String(text)).indexOf('\n');
+    while(loc > 0){
+          text.replace(loc, loc+1, "<BR>");
+          loc = (new String(text)).indexOf('\n');
+    }
+
+    String text2 = request.getParameter("message");
+    //text = Jsoup.clean(text, Whitelist.relaxed());
     String recipient = request.getParameter("recipient");
-    Message message = new Message(user, text, recipient);
+    Message message = new Message(user, text.toString(), recipient);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + recipient);
