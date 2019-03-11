@@ -106,6 +106,13 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
+/* isBlockCode
+
+This function checks if the message has a block of code. 
+If it does it places it between blocks of ode.
+If not just return the message.
+
+*/
 function isBlockCode(message) {
   var str = message;
   var patt1 = /```(.*)```/s;

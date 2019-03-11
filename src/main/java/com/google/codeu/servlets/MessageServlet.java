@@ -83,14 +83,13 @@ public class MessageServlet extends HttpServlet {
 
     int loc = (new String(text)).indexOf('\n');
     while(loc > 0){
-          text.replace(loc, loc+1, "<BR>");
-          loc = (new String(text)).indexOf('\n');
+      text.replace(loc, loc+1, "<BR>");
+      loc = (new String(text)).indexOf('\n');
     }
 
-    String text2 = request.getParameter("message");
-    //text = Jsoup.clean(text, Whitelist.relaxed());
+    String text2 = Jsoup.clean(text.toString(), Whitelist.relaxed());
     String recipient = request.getParameter("recipient");
-    Message message = new Message(user, text.toString(), recipient);
+    Message message = new Message(user, text2, recipient);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + recipient);

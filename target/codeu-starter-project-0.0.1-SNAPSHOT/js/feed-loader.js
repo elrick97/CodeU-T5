@@ -6,14 +6,14 @@
     }).then((messages) => {
       const messageContainer = document.getElementById('message-container');
       if(messages.length == 0){
-       messageContainer.innerHTML = '<p>There are no posts yet.</p>';
+        messageContainer.innerHTML = '<p>There are no posts yet.</p>';
       }
       else{
-       messageContainer.innerHTML = '';  
+        messageContainer.innerHTML = '';  
       }
       messages.forEach((message) => {  
-       const messageDiv = buildMessageDiv(message);
-       messageContainer.appendChild(messageDiv);
+        const messageDiv = buildMessageDiv(message);
+        messageContainer.appendChild(messageDiv);
       });
     });
   }
