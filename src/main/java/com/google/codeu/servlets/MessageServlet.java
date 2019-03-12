@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import java.lang.StringBuffer;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -77,13 +78,22 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String userText = Jsoup.clean(request.getParameter("text"), Whitelist.none());
-    String recipient = request.getParameter("recipient");
-    String regex = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg))";
+    String userText = request.getParameter("text");
+    
+    StringBuffer text = new StringBuffer(userText);
+    int loc = (new String(text)).indexOf('\n');
+    while(loc > 0){
+      text.replace(loc, loc+1, "<BR>");
+      loc = (new String(text)).indexOf('\n');
+    }
+    userText = text.toString;
+    String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg))";
     String replacement = "<img src=\"$1\" />";
-    String textWithImagesReplaced = userText.replaceAll(regex, replacement);
-
-    Message message = new Message(user, textWithImagesReplaced, recipient);
+    String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
+    
+    String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
+    String recipient = request.getParameter("recipient");
+    Message message = new Message(user, finalCleanText, recipient);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + recipient);
