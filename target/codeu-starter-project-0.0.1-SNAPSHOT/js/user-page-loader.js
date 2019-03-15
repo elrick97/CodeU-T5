@@ -30,17 +30,17 @@ function setPageTitle() {
 }
 
 /**
- * Shows the message form if the user is logged in and viewing their own page.
+ * Shows the message form if the user is logged in and viewing their own or someone else's page.
  */
-function showMessageFormIfViewingSelf() {
+function showMessageFormIfLoggedIn() {
   fetch('/login-status')
       .then((response) => {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
+        if (loginStatus.isLoggedIn) {
           const messageForm = document.getElementById('message-form');
+	      messageForm.action = '/messages?recipient=' + parameterUsername;
           messageForm.classList.remove('hidden');
           document.getElementById('about-me-form').classList.remove('hidden');
         }
@@ -96,7 +96,9 @@ function buildMessageDiv(message) {
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = isBlockCode(message.text);
+
+  console.log(message.tag);
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
@@ -106,10 +108,31 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
+/* isBlockCode
+
+This function checks if the message has a block of code. 
+If it does it places it between blocks of ode.
+If not just return the message.
+
+*/
+function isBlockCode(message) {
+  var str = message;
+  var patt1 = /```(.*)```/s;
+  var result = str.match(patt1);
+  if (result != null) {
+    message = message.replace(/```/s, "<pre class=\"prettyprint\"><code>").replace(/```/s, "</code></pre>");
+    return message;
+  }else{
+    return message;
+  }
+}
+
+
+
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
-  showMessageFormIfViewingSelf();
-  fetchMessages();
   fetchAboutMe();
+  showMessageFormIfLoggedIn();
+  fetchMessages();
 }

@@ -19,20 +19,19 @@ limitations under the License.
   <head>
     <meta charset="UTF-8">
     <title>CodeU 2019 Starter Project</title>
+     <script src="/js/navigation-loader.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/navigation-loader.js"></script>
   </head>
-  <body onload="addLoginOrLogoutLinkToNavigation();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-      </ul>
-    </nav>
-    <h1>CodeU Starter Project</h1>
-    <p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-    <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-    You could start by modifying this page to tell the world more about your team.</p>
+  <body onload="addLoginOrLogoutLinkToNavigation()">
+    <div id="navigation"></div>
+    <main class="container" role="main">
+      <div class="jumbotron">
+        <h1 class="display-4">CodingPool</h1>
+        <p class="lead">A place where you can share coding interview problems and challenge the community.</p>
+        <hr class="my-4">
+        <p>Explore problems and challenge yourself with real interview questions to prepare you for the future. blah blah blah... :D</p>
+      </div>
+    </main>
   </body>
 </html>
