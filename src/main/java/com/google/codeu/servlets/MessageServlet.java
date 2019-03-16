@@ -87,7 +87,7 @@ public class MessageServlet extends HttpServlet {
       loc = (new String(text)).indexOf('\n');
     }
     userText = text.toString();
-    String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg))";
+    String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
     String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
     
