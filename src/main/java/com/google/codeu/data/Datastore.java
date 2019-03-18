@@ -101,10 +101,10 @@ protected List<Message> createMessage(PreparedQuery results){
         String user= (String) entity.getProperty("user");
         String recipient = (String) entity.getProperty("recipient");
         String text = (String) entity.getProperty("text");
+	String tag = (String) entity.getProperty("tag");
         long timestamp = (long) entity.getProperty("timestamp");
-        String tag = (String) entity.getProperty("tag");
-        
-        Message message = new Message(id, user, text, timestamp, recipient,tag);
+       
+        Message message = new Message(id, user, text, timestamp, recipient, tag);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
