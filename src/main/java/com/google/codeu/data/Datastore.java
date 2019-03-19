@@ -57,7 +57,7 @@ public class Datastore {
   public List<Message> getMessages(String recipient) {
     List<Message> messages = new ArrayList<>();
     PreparedQuery results;
-    	if(recipient =="" || recipient == null) {
+    	if(recipient == "" || recipient == null) {
     		Query query =
     		        new Query("Message")
     		            .addSort("timestamp", SortDirection.DESCENDING);
