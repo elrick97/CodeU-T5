@@ -26,6 +26,7 @@ public class Message {
   private String text;
   private long timestamp;
   private String recipient;
+  private String imageUrl;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
@@ -62,4 +63,6 @@ public class Message {
   public long getTimestamp() {
     return timestamp;
   }
+
+  public void setImageUrl(String curImageUrl) { imageUrl = curImageUrl; }
 }
