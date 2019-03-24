@@ -57,21 +57,17 @@ public class Datastore {
   public List<Message> getMessages(String recipient) {
     List<Message> messages = new ArrayList<>();
     PreparedQuery results;
-    	if(recipient == "" || recipient == null) {
-    		Query query =
-    		        new Query("Message")
-    		            .addSort("timestamp", SortDirection.DESCENDING);
-    		    results = datastore.prepare(query);
-    	}
-    	else {
-    		Query query =
-    		        new Query("Message")
-    		        	.setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
-    		            .addSort("timestamp", SortDirection.DESCENDING);
-    		    results = datastore.prepare(query);   		    
-    	}
-    	return createMessage(results);
-    
+    if (recipient == "" || recipient == null) {
+      Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+      results = datastore.prepare(query);
+    } else {
+      Query query =
+          new Query("Message")
+              .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+              .addSort("timestamp", SortDirection.DESCENDING);
+      results = datastore.prepare(query);
+    }
+    return createMessage(results);
   }
   
   /*
