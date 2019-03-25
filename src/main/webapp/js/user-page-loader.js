@@ -57,6 +57,7 @@ function fetchImageUploadUrlAndShowForm() {
         const messageForm = document.getElementById('message-form');
         messageForm.action = imageUploadUrl;
         messageForm.classList.remove('hidden');
+        document.getElementById('recipientInput').value = parameterUsername;
     })
     ;
 }
@@ -119,6 +120,11 @@ function buildMessageDiv(message) {
     messageDiv.classList.add('message-div');
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(bodyDiv);
+
+    if(message.imageUrl){
+        bodyDiv.innerHTML += '<br/>';
+        bodyDiv.innerHTML += '<img src="' + message.imageUrl + '" />';
+    }
 
     return messageDiv;
 }

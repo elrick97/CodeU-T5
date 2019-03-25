@@ -101,7 +101,8 @@ public class MessageServlet extends HttpServlet {
 
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
     String recipient = request.getParameter("recipient");
-    Message message = new Message(user, finalCleanText, recipient);
+    String imageUrl = "";
+    Message message = new Message(user, finalCleanText, recipient, imageUrl);
 
     /* Allows for image upload via a saved file using Blobstore */
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -112,7 +113,7 @@ public class MessageServlet extends HttpServlet {
       BlobKey blobKey = blobKeys.get(0);
       ImagesService imagesService = ImagesServiceFactory.getImagesService();
       ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-      String imageUrl = imagesService.getServingUrl(options);
+      imageUrl = imagesService.getServingUrl(options);
       message.setImageUrl(imageUrl);
     }
 
