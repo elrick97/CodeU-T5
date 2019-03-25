@@ -20,67 +20,81 @@ const parameterUsername = urlParams.get('user');
 
 // URL must include ?user=XYZ parameter. If not, redirect to homepage.
 if (!parameterUsername) {
-  window.location.replace('/');
+    window.location.replace('/');
 }
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
+    document.getElementById('page-title').innerText = parameterUsername;
+    document.title = parameterUsername + ' - User Page';
 }
 
 /**
  * Shows the message form if the user is logged in and viewing their own or someone else's page.
  */
 function showMessageFormIfLoggedIn() {
-  fetch('/login-status')
-      .then((response) => {
-        return response.json();
-      })
-      .then((loginStatus) => {
-        if (loginStatus.isLoggedIn) {
-          const messageForm = document.getElementById('message-form');
-	      messageForm.action = '/messages?recipient=' + parameterUsername;
-          messageForm.classList.remove('hidden');
-          document.getElementById('about-me-form').classList.remove('hidden');
-        }
-      });
+    fetch('/login-status')
+        .then((response) => {
+            return response.json();
+        })
+        .then((loginStatus) => {
+            if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+                document.getElementById('about-me-form').classList.remove('hidden');
+                fetchImageUploadUrlAndShowForm();
+            }
+        })
+    ;
+}
+
+function fetchImageUploadUrlAndShowForm() {
+    fetch('/image-upload-url?recipient=' + parameterUsername)
+        .then((response) => {
+            return response.text();
+        }).then((imageUploadUrl) => {
+        const messageForm = document.getElementById('message-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+    })
+    ;
 }
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
-  const url = '/messages?user=' + parameterUsername;
-  fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((messages) => {
-        const messagesContainer = document.getElementById('message-container');
-        if (messages.length == 0) {
-          messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
-        } else {
-          messagesContainer.innerHTML = '';
-        }
-        messages.forEach((message) => {
-          const messageDiv = buildMessageDiv(message);
-          messagesContainer.appendChild(messageDiv);
-        });
-      });
+    const url = '/messages?user=' + parameterUsername;
+    fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((messages) => {
+            const messagesContainer = document.getElementById('message-container');
+            if (messages.length == 0) {
+                messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+            } else {
+                messagesContainer.innerHTML = '';
+            }
+            messages.forEach((message) => {
+                const messageDiv = buildMessageDiv(message);
+                messagesContainer.appendChild(messageDiv);
+            })
+            ;
+        })
+    ;
 }
 
-function fetchAboutMe(){
-  const url = '/about?user=' + parameterUsername;
-  fetch(url).then((response) => {
-    return response.text();
-  }).then((aboutMe) => {
-    const aboutMeContainer = document.getElementById('about-me-container');
-    if(aboutMe == ''){
-      aboutMe = 'This user has not entered any information yet.';
-    }
+function fetchAboutMe() {
+    const url = '/about?user=' + parameterUsername;
+    fetch(url).then((response) => {
+        return response.text();
+    }).then((aboutMe) => {
+        const aboutMeContainer = document.getElementById('about-me-container');
+        if (aboutMe == '') {
+            aboutMe = 'This user has not entered any information yet.';
+        }
 
-    aboutMeContainer.innerHTML = aboutMe;
+        aboutMeContainer.innerHTML = aboutMe;
 
-  });
+    })
+    ;
 }
 
 /**
@@ -89,23 +103,21 @@ function fetchAboutMe(){
  * @return {Element}
  */
 function buildMessageDiv(message) {
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('message-header');
-  headerDiv.appendChild(document.createTextNode(
-      message.user + ' - ' + new Date(message.timestamp)));
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('message-header');
+    headerDiv.appendChild(document.createTextNode(
+    message.user + ' - ' + new Date(message.timestamp)));
 
-  const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = isBlockCode(message.text);
+    const bodyDiv = document.createElement('div');
+    bodyDiv.classList.add('message-body');
+    bodyDiv.innerHTML = isBlockCode(message.text);
 
-  console.log(message.tag);
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message-div');
+    messageDiv.appendChild(headerDiv);
+    messageDiv.appendChild(bodyDiv);
 
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message-div');
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
-
-  return messageDiv;
+    return messageDiv;
 }
 
 /* isBlockCode
@@ -116,23 +128,22 @@ If not just return the message.
 
 */
 function isBlockCode(message) {
-  var str = message;
-  var patt1 = /```(.*)```/s;
-  var result = str.match(patt1);
-  if (result != null) {
-    message = message.replace(/```/s, "<pre class=\"prettyprint\"><code>").replace(/```/s, "</code></pre>");
-    return message;
-  }else{
-    return message;
-  }
+    var str = message;
+    var patt1 = /```(.*)```/s;
+    var result = str.match(patt1);
+    if (result != null) {
+        message = message.replace(/```/s, "<pre class=\"prettyprint\"><code>").replace(/```/s, "</code></pre>");
+        return message;
+    } else {
+        return message;
+    }
 }
-
 
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  fetchAboutMe();
-  showMessageFormIfLoggedIn();
-  fetchMessages();
+    setPageTitle();
+    showMessageFormIfLoggedIn()
+    fetchAboutMe();
+    fetchMessages();
 }

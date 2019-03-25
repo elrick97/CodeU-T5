@@ -1,24 +1,27 @@
+const urlParams = new URLSearchParams(window.location.search);
+const parameterUsername = urlParams.get('user');
+
   // Fetch messages and add them to the page.
-  function fetchMessages(){
-    const url = '/feed';
-    fetch(url).then((response) => {
-      return response.json();
-    }).then((messages) => {
-      const messageContainer = document.getElementById('message-container');
-      if(messages.length == 0){
-        messageContainer.innerHTML = '<p>There are no posts yet.</p>';
-      }
-      else{
-        messageContainer.innerHTML = '';  
-      }
-      messages.forEach((message) => {  
-        const messageDiv = buildMessageDiv(message);
-        messageContainer.appendChild(messageDiv);
-      });
+function fetchMessages(){
+  const url = '/feed';
+  fetch(url).then((response) => {
+    return response.json();
+  }).then((messages) => {
+    const messageContainer = document.getElementById('message-container');
+    if(messages.length == 0){
+      messageContainer.innerHTML = '<p>There are no posts yet.</p>';
+    }
+    else{
+      messageContainer.innerHTML = '';  
+    }
+    messages.forEach((message) => {  
+      const messageDiv = buildMessageDiv(message);
+      messageContainer.appendChild(messageDiv);
     });
-  }
+  });
+}
   
-  function buildMessageDiv(message){
+function buildMessageDiv(message){
    const usernameDiv = document.createElement('div');
    usernameDiv.classList.add("left-align");
    usernameDiv.appendChild(document.createTextNode(message.user));
@@ -40,11 +43,28 @@
    messageDiv.classList.add("message-div");
    messageDiv.appendChild(headerDiv);
    messageDiv.appendChild(bodyDiv);
+
+   console.log(message);
    
    return messageDiv;
   }
-  
-  function isBlockCode(message) {
+
+function showMessageFormIfLoggedIn() {
+    fetch('/login-status')
+        .then((response) => {
+            return response.json();
+        })
+        .then((loginStatus) => {
+            if (loginStatus.isLoggedIn && loginStatus.username != parameterUsername) {
+                const messageForm = document.getElementById('message-form');
+                messageForm.action = '/messages?recipient=' + parameterUsername;
+                messageForm.classList.remove('hidden');
+            }
+        })
+    ;
+}
+
+function isBlockCode(message) {
   var str = message;
   var patt1 = /```(.*)```/s;
   var result = str.match(patt1);
@@ -57,6 +77,7 @@
 }
   
   // Fetch data and populate the UI of the page.
-  function buildUI(){
-   fetchMessages();
-  }
+function buildUI(){
+  showMessageFormIfLoggedIn();
+  fetchMessages();
+}

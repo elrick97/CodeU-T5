@@ -15,7 +15,6 @@
  */
 
 package com.google.codeu.servlets;
-
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
@@ -87,16 +86,17 @@ public class MessageServlet extends HttpServlet {
       loc = (new String(text)).indexOf('\n');
     }
     userText = text.toString();
-    String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg))";
+    String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
     String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
     
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
-    String recipient = request.getParameter("recipient");
+    //String recipient = request.getParameter("recipient");
     String tag = request.getParameter("tag");
-    Message message = new Message(user, finalCleanText, recipient, tag);
+    //I think you can just reuse user at least for now...since the linked parameter is going to be different.
+    Message message = new Message(user, finalCleanText, user, tag);
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.html?user=" + recipient);
+    response.sendRedirect("/feed.html");
   }
 }
