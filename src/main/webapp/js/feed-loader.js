@@ -22,32 +22,47 @@ function fetchMessages(){
 }
   
 function buildMessageDiv(message){
-   const usernameDiv = document.createElement('div');
-   usernameDiv.classList.add("left-align");
+   const usernameDiv = document.createElement('h5');
+   usernameDiv.classList.add("card-header");
    usernameDiv.appendChild(document.createTextNode(message.user));
    
    const timeDiv = document.createElement('div');
-   timeDiv.classList.add('right-align');
+   timeDiv.classList.add('card-header');
    timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
    
    const headerDiv = document.createElement('div');
-   headerDiv.classList.add('message-header');
+   headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
    headerDiv.appendChild(timeDiv);
    
    const bodyDiv = document.createElement('div');
-   bodyDiv.classList.add('message-body');
+   bodyDiv.classList.add('card-body');
    bodyDiv.innerHTML = isBlockCode(message.text);
-   
+
+   console.log(isBlockCode(message.text));
+
+  var xmlString = "<div class=\"input-group mb-3\"><input name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
+  const commentStruct = new DOMParser().parseFromString(xmlString, 'text/html');
+
+  console.log(commentStruct);
+
+   const footerDiv = document.createElement('div');
+   footerDiv.classList.add('card-footer');
+   footerDiv.innerHTML = (new XMLSerializer()).serializeToString(commentStruct);
+
    const messageDiv = document.createElement('div');
-   messageDiv.classList.add("message-div");
+   messageDiv.classList.add("card");
    messageDiv.appendChild(headerDiv);
    messageDiv.appendChild(bodyDiv);
+   messageDiv.appendChild(footerDiv);
 
-   console.log(message);
+   const formContainer = document.createElement('form');
+   formContainer.setAttribute("action", "/reply");
+   formContainer.setAttribute("method", "POST");
+   formContainer.appendChild(messageDiv);
    
-   return messageDiv;
-  }
+ return formContainer;
+}
 
 function showMessageFormIfLoggedIn() {
     fetch('/login-status')

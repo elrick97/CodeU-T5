@@ -104,16 +104,16 @@ function fetchAboutMe() {
  */
 function buildMessageDiv(message) {
     const headerDiv = document.createElement('div');
-    headerDiv.classList.add('message-header');
+    headerDiv.classList.add('card-header');
     headerDiv.appendChild(document.createTextNode(
     message.user + ' - ' + new Date(message.timestamp)));
 
     const bodyDiv = document.createElement('div');
-    bodyDiv.classList.add('message-body');
+    bodyDiv.classList.add('card-body');
     bodyDiv.innerHTML = isBlockCode(message.text);
 
     const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message-div');
+    messageDiv.classList.add('card');
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(bodyDiv);
 
