@@ -14,13 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/reply")
 public class ReplyServlet extends HttpServlet {
 
-	private Message message;
+	private Datastore datastore;
 
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
-
+	public void init() {
+	datastore = new Datastore();
 	}
 
 	@Override
@@ -32,11 +30,36 @@ public class ReplyServlet extends HttpServlet {
 	      return;
 	    }
 
+	    List<Message> messages = datastore.getAllMessages();
+	    String specificMessageText = request.getParameter("messageText");
+
+	    Message target = findMessage(messages, specificMessageText);
+
 	    String user = userService.getCurrentUser().getEmail();
 	    String replyText = request.getParameter("replyText");
 	    String text = user + ": " + replyText;
 
-	    message.addReply(text);
+	    target.addReply(text);
+	    datastore.storeMessage(target);
         response.sendRedirect("/feed.html");
 	}
+
+	Message findMessage(List<Message> messages, String text){
+		for(Message message : messages){
+			if(message.getText().equals(text)){
+				return message;
+			}
+		}
+		return null;
+	}
 }
+
+
+
+
+
+
+
+
+
+
