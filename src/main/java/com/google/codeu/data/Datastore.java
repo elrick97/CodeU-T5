@@ -56,13 +56,17 @@ public class Datastore {
    */
   public List<Message> getMessages(String recipient) {
     List<Message> messages = new ArrayList<>();
-
-    Query query =
-        new Query("Message")
-        	.setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
-            .addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-
+    PreparedQuery results;
+    if (recipient == "" || recipient == null) {
+      Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+      results = datastore.prepare(query);
+    } else {
+      Query query =
+          new Query("Message")
+              .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+              .addSort("timestamp", SortDirection.DESCENDING);
+      results = datastore.prepare(query);
+    }
     return createMessage(results);
   }
   
@@ -93,9 +97,9 @@ protected List<Message> createMessage(PreparedQuery results){
         String user= (String) entity.getProperty("user");
         String recipient = (String) entity.getProperty("recipient");
         String text = (String) entity.getProperty("text");
-        String tag = (String) entity.getProperty("tag");
+	String tag = (String) entity.getProperty("tag");
         long timestamp = (long) entity.getProperty("timestamp");
-        
+       
         Message message = new Message(id, user, text, timestamp, recipient, tag);
         messages.add(message);
       } catch (Exception e) {
