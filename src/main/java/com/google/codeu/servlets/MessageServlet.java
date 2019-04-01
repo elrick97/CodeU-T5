@@ -15,7 +15,6 @@
  */
 
 package com.google.codeu.servlets;
-
 import java.util.*;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -120,6 +119,6 @@ public class MessageServlet extends HttpServlet {
     Message message = new Message(user, finalCleanText, recipient, tag, imageUrl);
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.html?user=" + recipient);
+    response.sendRedirect("/feed.html");
   }
 }

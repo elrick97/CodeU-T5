@@ -9,6 +9,7 @@ com/google/codeu/servlets/MessageServlet.class
 com/google/codeu/data/User.class
 com/google/codeu/servlets/LogoutServlet.class
 com/google/codeu/data/Datastore.class
+com/google/codeu/servlets/ReplyServlet.class
 com/google/codeu/servlets/ImageUploadUrlServlet.class
 com/google/codeu/servlets/MapServlet$1.class
 com/google/codeu/servlets/test.class
