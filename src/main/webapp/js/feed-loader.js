@@ -30,10 +30,20 @@ function buildMessageDiv(message){
    timeDiv.classList.add('card-header');
    timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
    
+   var button = document.createElement("BUTTON");
+   button.innerHTML = "Solve";
+   button.style.backgroundColor = '#4CAF50';
+   button.style.color = "white";
+   button.style.borderRadius = "5px";
+   button.style.border = 'none';
+   button.style.margin = "10px 0 0 0";
+
+   
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
    headerDiv.appendChild(timeDiv);
+   headerDiv.appendChild(button);
    
    const bodyDiv = document.createElement('div');
    bodyDiv.classList.add('card-body');
