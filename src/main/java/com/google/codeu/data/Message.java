@@ -30,6 +30,7 @@ public class Message {
   private String imageUrl;
   private String tag;
   private ArrayList<String> replies;
+  private ArrayList <User> solved;
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
