@@ -37,9 +37,7 @@ function buildMessageDiv(message){
    button.style.borderRadius = "5px";
    button.style.border = 'none';
    button.style.margin = "10px 0 0 0";
-   //onClick code?
-
-   
+  
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
