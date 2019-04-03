@@ -30,16 +30,16 @@ public class Message {
   private String imageUrl;
   private String tag;
   private ArrayList<String> replies;
-  private ArrayList <User> solved;
+  private ArrayList <String> solved; // email 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text, String recipient, String tag, String imageUrl) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, imageUrl);
+  public Message(String user, String text, String recipient, String tag, String imageUrl, ArrayList <String> solved) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, imageUrl, solved);
   }
 
-  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, String imageUrl) {
+  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, String imageUrl, ArrayList<String> solved) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -48,6 +48,7 @@ public class Message {
     this.imageUrl = imageUrl;
     this.tag = tag;
     this.replies = new ArrayList<String>();
+    this.solved = new ArrayList<String>();//email
   }
   
   public String getTag(){
@@ -85,5 +86,13 @@ public class Message {
     if (replyText != null) {
       replies.add(replyText);
     }
+  }
+  
+  public ArrayList<String> getSolved(){
+	  return solved;
+  }
+  
+  public void addUserToSolved(String email) {
+	  solved.add(email);
   }
 }

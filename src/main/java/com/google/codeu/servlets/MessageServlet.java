@@ -22,7 +22,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -117,7 +117,8 @@ public class MessageServlet extends HttpServlet {
     */
 
     String tag = request.getParameter("tag");
-    Message message = new Message(user, finalCleanText, user, tag, imageUrl);
+    ArrayList<String> solved = (ArrayList<String>) request.getAttribute("solved");
+    Message message = new Message(user, finalCleanText, user, tag, imageUrl, solved);
     datastore.storeMessage(message);
 
     response.sendRedirect("/feed.html");

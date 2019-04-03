@@ -49,10 +49,11 @@ public class Datastore {
         messageEntity.setProperty("text", message.getText());
         messageEntity.setProperty("timestamp", message.getTimestamp());
         messageEntity.setProperty("recipient", message.getRecipient());
+        messageEntity.setProperty("solved", message.getSolved());
         if (message.getImageUrl() != null) {
             messageEntity.setProperty("imageUrl", message.getImageUrl());
         }
-
+// SOLVED aaraylist 
         datastore.put(messageEntity);
     }
 
@@ -104,10 +105,10 @@ public class Datastore {
                 String text = (String) entity.getProperty("text");
                 long timestamp = (long) entity.getProperty("timestamp");
                 String tag = (String) entity.getProperty("tag");
-
+                ArrayList <String> solved = (ArrayList<String>) entity.getProperty("solved");
                 String imageUrl = (String) entity.getProperty("imageUrl");
 
-                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl);
+                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl,solved);
                 messages.add(message);
             } catch (Exception e) {
                 System.err.println("Error reading message.");
