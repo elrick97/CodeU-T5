@@ -53,7 +53,6 @@ public class Datastore {
         if (message.getImageUrl() != null) {
             messageEntity.setProperty("imageUrl", message.getImageUrl());
         }
-// SOLVED aaraylist 
         datastore.put(messageEntity);
     }
 

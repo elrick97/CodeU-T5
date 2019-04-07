@@ -37,6 +37,9 @@ function buildMessageDiv(message){
    button.style.borderRadius = "5px";
    button.style.border = 'none';
    button.style.margin = "10px 0 0 0";
+   button.onClick = function(){
+   	onSolveButtonClick();
+   }
   
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
@@ -104,3 +107,29 @@ function buildUI(){
   showMessageFormIfLoggedIn();
   fetchMessages();
 }
+
+function onSolveButtonClick(){
+	//post('/messages', message.UUID, "POST");
+	//button.style.color = '#fb5e50';	
+}
+
+/*function post(path, params, method){
+	var form = document.createElement("form");
+	form.setAttribute("method", method);
+	form.setAttribute("action", path);
+	
+	for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+	
+	document.body.appendChild(form);
+	form.submit();
+	}*/
+

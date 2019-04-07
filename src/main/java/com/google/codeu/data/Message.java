@@ -89,10 +89,6 @@ public class Message {
   }
   
   public ArrayList<String> getSolved(){
-	  return solved;
-  }
-  
-  public void addUserToSolved(String email) {
-	  solved.add(email);
+	return solved;
   }
 }
