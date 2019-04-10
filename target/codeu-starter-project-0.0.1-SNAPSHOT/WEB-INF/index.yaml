@@ -19,4 +19,5 @@ indexes:
   - name: recipient
   - name: timestamp
   - name: tag
+  - name: replies
     direction: desc

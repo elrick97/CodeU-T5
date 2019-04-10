@@ -103,6 +103,8 @@ public class Datastore {
                 String recipient = (String) entity.getProperty("recipient");
                 String text = (String) entity.getProperty("text");
                 long timestamp = (long) entity.getProperty("timestamp");
+                String tag = (String) entity.getProperty("tag");
+
                 String imageUrl = (String) entity.getProperty("imageUrl");
                 String tag = (String) entity.getProperty("tag");
 

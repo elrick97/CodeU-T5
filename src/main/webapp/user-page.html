@@ -21,10 +21,13 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
+    <script src="/js/chart-loader.js"></script>
+    <script type="text/javascript"></script>
     <script type="text/javascript">
     function start(){
       addLoginOrLogoutLinkToNavigation();
@@ -43,40 +46,10 @@ limitations under the License.
         <br/>
         <input type="submit" value="Submit" class="btn btn-primary">
       </form>
+      <div id="chart_div"></div>
     </div>
     <hr/>
-    <form id="message-form" action="/messages" method="POST" class="hidden" enctype="multipart/form-data">
-      Enter a new message: To enter blocks of code place your code between ``` Block Code ```
-      <br/>
-      <textarea name="text" id="message-input"></textarea>
-      <br/>
-      <div class="form-row">
-        <div class="col">
-          <input type="submit" value="Submit" class="btn btn-primary">
-        </div>
-        <div class="col">
-          Add an image to your message:
-          <input type="file" name="image">
-          <br/>
-          <input type="hidden" value="" name="recipient" id="recipientInput">
-          <input type="submit" value="Submit">
-        </div>
-        <div class="col">
-          <select class="custom-select" name="tag">
-            <option selected>Select a Tag</option>
-            <option value="1">Strings</option>
-            <option value="2">Arrays</option>
-            <option value="3">Lists</option>
-            <option value="4">Stacks</option>
-            <option value="5">Queues</option>
-            <option value="6">Trees</option>
-            <option value="7">Graphs</option>
-            <option value="8">Dynamic Programming</option>
-            <option value="8">Divide and Conquer</option>
-          </select>
-        </div>
-      </div>
-    </form>
+
     <div id="message-container">Loading...</div>
     </main>
   </body>

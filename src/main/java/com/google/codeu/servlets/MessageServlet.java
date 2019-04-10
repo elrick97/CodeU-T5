@@ -15,7 +15,6 @@
  */
 
 package com.google.codeu.servlets;
-
 import java.util.*;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -105,7 +104,7 @@ public class MessageServlet extends HttpServlet {
     String tag = request.getParameter("tag");
     Message message = new Message(user, finalCleanText, recipient, tag, imageUrl);
 
-    /* Allows for image upload via a saved file using Blobstore */
+    /*       Allows for image upload via a saved file using Blobstore 
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get("image");
@@ -117,9 +116,12 @@ public class MessageServlet extends HttpServlet {
       imageUrl = imagesService.getServingUrl(options);
       message.setImageUrl(imageUrl);
     }
+    */
 
+    String tag = request.getParameter("tag");
+    Message message = new Message(user, finalCleanText, user, tag, imageUrl);
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.html?user=" + recipient);
+    response.sendRedirect("/feed.html");
   }
 }
