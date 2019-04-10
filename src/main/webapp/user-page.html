@@ -45,7 +45,7 @@ limitations under the License.
       </form>
     </div>
     <hr/>
-    <form id="message-form" action="/messages" method="POST" class="hidden">
+    <form id="message-form" action="/messages" method="POST" class="hidden" enctype="multipart/form-data">
       Enter a new message: To enter blocks of code place your code between ``` Block Code ```
       <br/>
       <textarea name="text" id="message-input"></textarea>
@@ -53,6 +53,13 @@ limitations under the License.
       <div class="form-row">
         <div class="col">
           <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+        <div class="col">
+          Add an image to your message:
+          <input type="file" name="image">
+          <br/>
+          <input type="hidden" value="" name="recipient" id="recipientInput">
+          <input type="submit" value="Submit">
         </div>
         <div class="col">
           <select class="custom-select" name="tag">
@@ -70,18 +77,6 @@ limitations under the License.
         </div>
       </div>
     </form>
-
-      <form id="message-form" class="hidden" method="POST" enctype="multipart/form-data">
-        Enter a new message:
-        <br/>
-        <textarea name="text" id="message-input"></textarea>
-        <br/>
-        Add an image to your message:
-        <input type="file" name="image">
-        <br/>
-        <input type="hidden" value="" name="recipient" id="recipientInput">
-        <input type="submit" value="Submit">
-      </form>
     <div id="message-container">Loading...</div>
     </main>
   </body>

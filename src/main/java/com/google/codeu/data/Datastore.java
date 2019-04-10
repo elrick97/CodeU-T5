@@ -104,8 +104,9 @@ public class Datastore {
                 String text = (String) entity.getProperty("text");
                 long timestamp = (long) entity.getProperty("timestamp");
                 String imageUrl = (String) entity.getProperty("imageUrl");
+                String tag = (String) entity.getProperty("tag");
 
-                Message message = new Message(id, user, text, timestamp, recipient, imageUrl);
+                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl);
                 messages.add(message);
             } catch (Exception e) {
                 System.err.println("Error reading message.");
