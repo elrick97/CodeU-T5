@@ -37,13 +37,13 @@ function buildMessageDiv(message){
    
    const bodyDiv = document.createElement('div');
    bodyDiv.classList.add('card-body');
-   bodyDiv.setAttribute("name", "messageText")
+   bodyDiv.setAttribute('name', 'messageText');
    bodyDiv.innerHTML = isBlockCode(message.text);
 
-  var xmlString = "<div class=\"input-group mb-3\"><input name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
-  const commentStruct = new DOMParser().parseFromString(xmlString, 'text/html');
+   const messageID = message.id;
 
-  console.log(commentStruct);
+  var xmlString = "<div class=\"input-group mb-3\"><input \"name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
+  const commentStruct = new DOMParser().parseFromString(xmlString, 'text/html');
 
    const footerDiv = document.createElement('div');
    footerDiv.classList.add('card-footer');
@@ -56,7 +56,7 @@ function buildMessageDiv(message){
    messageDiv.appendChild(footerDiv);
 
    const formContainer = document.createElement('form');
-   formContainer.setAttribute("action", "/reply");
+   formContainer.setAttribute("action", "/reply?mid="+messageID);
    formContainer.setAttribute("method", "POST");
    formContainer.appendChild(messageDiv);
    

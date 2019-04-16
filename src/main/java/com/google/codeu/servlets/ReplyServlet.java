@@ -6,19 +6,24 @@ import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger; 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
+
 
 @WebServlet("/reply")
 public class ReplyServlet extends HttpServlet {
 
 	private Datastore datastore;
+	private static final Logger log =  
+      Logger.getLogger(ReplyServlet.class.getName()); 
 
 	@Override
 	public void init() {
-	datastore = new Datastore();
+		datastore = new Datastore();
 	}
 
 	@Override
@@ -31,35 +36,30 @@ public class ReplyServlet extends HttpServlet {
 	    }
 
 	    List<Message> messages = datastore.getAllMessages();
-	    String specificMessageText = request.getParameter("messageText");
+	 	String messageID = request.getParameter("mid");
 
-	    Message target = findMessage(messages, specificMessageText);
+	    Message target = findMessage(messages, messageID);
 
 	    String user = userService.getCurrentUser().getEmail();
 	    String replyText = request.getParameter("replyText");
 	    String text = user + ": " + replyText;
 
+	    if(datastore == null){
+	    	init();
+	    }
 	    target.addReply(text);
 	    datastore.storeMessage(target);
         response.sendRedirect("/feed.html");
 	}
 
-	Message findMessage(List<Message> messages, String text){
+	Message findMessage(List<Message> messages, String messageID){
 		for(Message message : messages){
-			if(message.getText().equals(text)){
+			if(message.getId().toString().equals(messageID)){
+				log.info("******************MESSAGE FOUND********************** ");
 				return message;
+
 			}
 		}
 		return null;
 	}
 }
-
-
-
-
-
-
-
-
-
-
