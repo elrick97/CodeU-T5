@@ -49,6 +49,7 @@ public class Datastore {
         messageEntity.setProperty("text", message.getText());
         messageEntity.setProperty("timestamp", message.getTimestamp());
         messageEntity.setProperty("recipient", message.getRecipient());
+        messageEntity.setProperty("tag", message.getTag());
         messageEntity.setProperty("solved", message.getSolved());
         if (message.getImageUrl() != null) {
             messageEntity.setProperty("imageUrl", message.getImageUrl());
@@ -64,12 +65,19 @@ public class Datastore {
      */
     public List<Message> getMessages(String recipient) {
         List<Message> messages = new ArrayList<>();
-
-        Query query =
+        PreparedQuery results;
+        if(recipient == null || recipient == "") {
+        	Query query =
+                    new Query("Message")
+                            .addSort("timestamp", SortDirection.DESCENDING);
+            results = datastore.prepare(query);
+        }
+        else{Query query =
                 new Query("Message")
                         .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
                         .addSort("timestamp", SortDirection.DESCENDING);
-        PreparedQuery results = datastore.prepare(query);
+        	results = datastore.prepare(query);
+        }
 
         return createMessage(results);
     }
