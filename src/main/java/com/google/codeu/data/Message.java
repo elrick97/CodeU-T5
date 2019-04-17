@@ -33,12 +33,12 @@ public class Message {
   private long timestamp;
   private String recipient;
   private String tag;
-  public ArrayList<String> replies = new ArrayList<String>();
+  public ArrayList<String> replies;
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text, String recipient, String tag, ArrayList<String>replies) {
+  public Message(String user, String text, String recipient, String tag, ArrayList<String> replies) {
     this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, replies);
   }
 
@@ -49,7 +49,7 @@ public class Message {
     this.timestamp = timestamp;
     this.recipient = recipient;
     this.tag = tag;
-    this.replies = new ArrayList<String>();
+    this.replies = replies;
   }
   
   public String getTag(){

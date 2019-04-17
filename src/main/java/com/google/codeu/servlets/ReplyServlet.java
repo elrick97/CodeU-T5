@@ -48,11 +48,8 @@ public class ReplyServlet extends HttpServlet {
 	    /*if(datastore == null){
 	    	init();
 	    }*/
-
-	    target.replies.add(text);
-	    target.replies.add("1");
-	    target.replies.add("2");
 	    //target.printMessage();
+	    target.replies.add(text);
 	    datastore.storeMessage(target);
         response.sendRedirect("/feed.html");
 	}
