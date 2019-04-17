@@ -106,6 +106,7 @@ public class Datastore {
                 String tag = (String) entity.getProperty("tag");
 
                 String imageUrl = (String) entity.getProperty("imageUrl");
+                String tag = (String) entity.getProperty("tag");
 
                 Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl);
                 messages.add(message);
