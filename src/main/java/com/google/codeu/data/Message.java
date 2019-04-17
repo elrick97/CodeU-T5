@@ -33,7 +33,7 @@ public class Message {
   private long timestamp;
   private String recipient;
   private String tag;
-  public ArrayList<String> replies=  new ArrayList<>();
+  public ArrayList<String> replies = new ArrayList<String>();
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
@@ -85,16 +85,16 @@ public class Message {
 
   public void printReplies(){
     for(String i : replies){
-      log.info(""+i);
+      log.info("reply: "+i);
     }
   }
   public void printMessage(){
-    log.info(""+id);
-    log.info(""+user);
-    log.info(""+text);
-    log.info(""+timestamp);
-    log.info(""+recipient);
-    log.info(""+tag);
+    log.info("id: "+id);
+    log.info("user: "+user);
+    log.info("text: "+text);
+    log.info("time: "+timestamp);
+    log.info("recipient: "+recipient);
+    log.info("tag: "+tag);
     printReplies();
   }
 }

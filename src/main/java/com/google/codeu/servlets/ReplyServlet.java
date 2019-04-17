@@ -17,9 +17,10 @@ import java.util.UUID;
 @WebServlet("/reply")
 public class ReplyServlet extends HttpServlet {
 
-	private Datastore datastore;
 	private static final Logger log =  
       Logger.getLogger(ReplyServlet.class.getName()); 
+
+	private Datastore datastore;
 
 	@Override
 	public void init() {
@@ -44,14 +45,14 @@ public class ReplyServlet extends HttpServlet {
 	    String replyText = request.getParameter("replyText");
 	    String text = user + ": " + replyText;
 
-	    if(datastore == null){
+	    /*if(datastore == null){
 	    	init();
-	    }
+	    }*/
 
 	    target.replies.add(text);
 	    target.replies.add("1");
 	    target.replies.add("2");
-	    target.printMessage();
+	    //target.printMessage();
 	    datastore.storeMessage(target);
         response.sendRedirect("/feed.html");
 	}

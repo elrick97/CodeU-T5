@@ -94,7 +94,7 @@ public class MessageServlet extends HttpServlet {
     
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
     String tag = request.getParameter("tag");
-    ArrayList<String> replies = new ArrayList<String>();
+    ArrayList<String> replies = new ArrayList<>();
     Message message = new Message(user, finalCleanText, user, tag, replies);
     datastore.storeMessage(message);
 

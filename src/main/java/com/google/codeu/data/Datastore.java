@@ -27,9 +27,14 @@ import com.google.appengine.api.datastore.FetchOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger; 
+
 
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
+
+  private static final Logger log =  
+      Logger.getLogger(Datastore.class.getName()); 
 
   private DatastoreService datastore;
 
@@ -46,6 +51,8 @@ public class Datastore {
     messageEntity.setProperty("recipient", message.getRecipient());
     messageEntity.setProperty("tag", message.getTag());
     messageEntity.setProperty("replies", message.getReplies());
+    log.info("***********************STORE Message PRINT**************************");
+    message.printMessage();
     datastore.put(messageEntity);
   }
 
@@ -99,6 +106,10 @@ protected List<Message> createMessage(PreparedQuery results){
         ArrayList<String> replies = (ArrayList<String>) entity.getProperty("replies");
         
         Message message = new Message(id, user, text, timestamp, recipient, tag, replies);
+        if(user == "elrick"){
+          log.info("***********************CREATE MESSAGE PRINT**************************");
+          message.printMessage();
+        }
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
