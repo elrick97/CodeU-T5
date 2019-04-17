@@ -42,12 +42,14 @@ function buildMessageDiv(message){
 
    const messageID = message.id;
 
-  var xmlString = "<div class=\"input-group mb-3\"><input \"name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
+  var xmlString = "<div class=\"input-group mb-3\"><input name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
   const commentStruct = new DOMParser().parseFromString(xmlString, 'text/html');
 
    const footerDiv = document.createElement('div');
    footerDiv.classList.add('card-footer');
    footerDiv.innerHTML = (new XMLSerializer()).serializeToString(commentStruct);
+
+   console.log(message);
 
    const messageDiv = document.createElement('div');
    messageDiv.classList.add("card");
@@ -59,7 +61,7 @@ function buildMessageDiv(message){
    formContainer.setAttribute("action", "/reply?mid="+messageID);
    formContainer.setAttribute("method", "POST");
    formContainer.appendChild(messageDiv);
-   
+
  return formContainer;
 }
 

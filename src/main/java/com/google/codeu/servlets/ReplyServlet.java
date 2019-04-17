@@ -47,7 +47,11 @@ public class ReplyServlet extends HttpServlet {
 	    if(datastore == null){
 	    	init();
 	    }
-	    target.addReply(text);
+
+	    target.replies.add(text);
+	    target.replies.add("1");
+	    target.replies.add("2");
+	    target.printMessage();
 	    datastore.storeMessage(target);
         response.sendRedirect("/feed.html");
 	}
@@ -57,7 +61,6 @@ public class ReplyServlet extends HttpServlet {
 			if(message.getId().toString().equals(messageID)){
 				log.info("******************MESSAGE FOUND********************** ");
 				return message;
-
 			}
 		}
 		return null;

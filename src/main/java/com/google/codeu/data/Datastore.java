@@ -45,6 +45,7 @@ public class Datastore {
     messageEntity.setProperty("timestamp", message.getTimestamp());
     messageEntity.setProperty("recipient", message.getRecipient());
     messageEntity.setProperty("tag", message.getTag());
+    messageEntity.setProperty("replies", message.getReplies());
     datastore.put(messageEntity);
   }
 
@@ -95,8 +96,9 @@ protected List<Message> createMessage(PreparedQuery results){
         String text = (String) entity.getProperty("text");
         String tag = (String) entity.getProperty("tag");
         long timestamp = (long) entity.getProperty("timestamp");
+        ArrayList<String> replies = (ArrayList<String>) entity.getProperty("replies");
         
-        Message message = new Message(id, user, text, timestamp, recipient, tag);
+        Message message = new Message(id, user, text, timestamp, recipient, tag, replies);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
@@ -115,8 +117,6 @@ protected List<Message> createMessage(PreparedQuery results){
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
-
-
 
   /** Stores the User in Datastore. */
   public void storeUser(User user) {

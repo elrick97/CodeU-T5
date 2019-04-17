@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import java.lang.StringBuffer;
+import java.util.ArrayList;
+
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -91,10 +93,9 @@ public class MessageServlet extends HttpServlet {
     String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
     
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
-    //String recipient = request.getParameter("recipient");
     String tag = request.getParameter("tag");
-    //I think you can just reuse user at least for now...since the linked parameter is going to be different.
-    Message message = new Message(user, finalCleanText, user, tag);
+    ArrayList<String> replies = new ArrayList<String>();
+    Message message = new Message(user, finalCleanText, user, tag, replies);
     datastore.storeMessage(message);
 
     response.sendRedirect("/feed.html");

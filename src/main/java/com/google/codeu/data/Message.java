@@ -18,9 +18,14 @@ package com.google.codeu.data;
 
 import java.util.UUID;
 import java.util.ArrayList; 
+import java.util.logging.Logger; 
+
 
 /** A single message posted by a user. */
 public class Message {
+
+  private static final Logger log =  
+      Logger.getLogger(Message.class.getName()); 
 
   private UUID id;
   private String user;
@@ -28,16 +33,16 @@ public class Message {
   private long timestamp;
   private String recipient;
   private String tag;
-  private ArrayList<String> replies;
+  public ArrayList<String> replies=  new ArrayList<>();
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text, String recipient, String tag) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag);
+  public Message(String user, String text, String recipient, String tag, ArrayList<String>replies) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, replies);
   }
 
-  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag) {
+  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, ArrayList<String> replies) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -75,8 +80,21 @@ public class Message {
   }
 
   public void addReply(String replyText){
-    if (replyText != null) {
-      replies.add(replyText);
+    replies.add(replyText);
+  }
+
+  public void printReplies(){
+    for(String i : replies){
+      log.info(""+i);
     }
+  }
+  public void printMessage(){
+    log.info(""+id);
+    log.info(""+user);
+    log.info(""+text);
+    log.info(""+timestamp);
+    log.info(""+recipient);
+    log.info(""+tag);
+    printReplies();
   }
 }
