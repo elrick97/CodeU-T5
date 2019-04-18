@@ -22,7 +22,6 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import java.lang.StringBuffer;
+import java.util.ArrayList;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -99,10 +99,11 @@ public class MessageServlet extends HttpServlet {
     String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
 
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
+    String tag = request.getParameter("tag");
+    ArrayList<String> replies = new ArrayList<String>();
+    replies.add("1");
     String recipient = request.getParameter("recipient");
     String imageUrl = "";
-    String tag = request.getParameter("tag");
-    Message message = new Message(user, finalCleanText, recipient, tag, imageUrl);
 
     /*       Allows for image upload via a saved file using Blobstore 
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -117,12 +118,9 @@ public class MessageServlet extends HttpServlet {
       message.setImageUrl(imageUrl);
     }
     */
-
-    String tag = request.getParameter("tag");
     ArrayList<String> solved = (ArrayList<String>) request.getAttribute("solved");
-    Message message = new Message(user, finalCleanText, user, tag, imageUrl, solved);
+    Message message = new Message(user, finalCleanText, user, tag, replies, imageUrl, solved);
     datastore.storeMessage(message);
-
     response.sendRedirect("/feed.html");
   }
 }

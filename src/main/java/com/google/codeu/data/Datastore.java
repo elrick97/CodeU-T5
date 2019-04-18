@@ -28,67 +28,64 @@ import com.google.appengine.api.datastore.FetchOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger; 
+
 
 /**
  * Provides access to the data stored in Datastore.
  */
 public class Datastore {
 
-    private DatastoreService datastore;
+  private static final Logger log =  
+      Logger.getLogger(Datastore.class.getName()); 
 
-    public Datastore() {
-        datastore = DatastoreServiceFactory.getDatastoreService();
+  private DatastoreService datastore;
+
+  public Datastore() {
+    datastore = DatastoreServiceFactory.getDatastoreService();
+  }
+
+  /** Stores the Message in Datastore. */
+  public void storeMessage(Message message) {
+    Entity messageEntity = new Entity("Message", message.getId().toString());
+    messageEntity.setProperty("user", message.getUser());
+    messageEntity.setProperty("text", message.getText());
+    messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("recipient", message.getRecipient());
+    messageEntity.setProperty("tag", message.getTag());
+    messageEntity.setProperty("replies", message.getReplies());
+    messageEntity.setProperty("solved", message.getSolved());
+
+    if (message.getImageUrl() != null) {
+        messageEntity.setProperty("imageUrl", message.getImageUrl());
     }
+    datastore.put(messageEntity);
+  }
 
-    /**
-     * Stores the Message in Datastore.
-     */
-    public void storeMessage(Message message) {
-        Entity messageEntity = new Entity("Message", message.getId().toString());
-        messageEntity.setProperty("user", message.getUser());
-        messageEntity.setProperty("text", message.getText());
-        messageEntity.setProperty("timestamp", message.getTimestamp());
-        messageEntity.setProperty("recipient", message.getRecipient());
-        messageEntity.setProperty("tag", message.getTag());
-        messageEntity.setProperty("solved", message.getSolved());
-
-        if (message.getImageUrl() != null) {
-            messageEntity.setProperty("imageUrl", message.getImageUrl());
-        }
-        datastore.put(messageEntity);
-    }
-
-    /**
-     * Gets messages posted by a specific user.
-     *
-     * @return a list of messages posted by the user, or empty list if user has never posted a
-     * message. List is sorted by time descending.
-     */
-    public List<Message> getMessages(String recipient) {
-        List<Message> messages = new ArrayList<>();
-        PreparedQuery results;
-        if(recipient == null || recipient == "") {
-        	Query query =
-                    new Query("Message")
-                            .addSort("timestamp", SortDirection.DESCENDING);
-            results = datastore.prepare(query);
-        }
-        else{Query query =
+  public List<Message> getMessages(String recipient) {
+    List<Message> messages = new ArrayList<>();
+    PreparedQuery results;
+    if(recipient == null || recipient == "") {
+    	Query query =
                 new Query("Message")
-                        .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
                         .addSort("timestamp", SortDirection.DESCENDING);
-        	results = datastore.prepare(query);
-        }
-
-        return createMessage(results);
+        results = datastore.prepare(query);
     }
-
-    /**
-     * Fetch messages from all users
-     *
-     * @return a list of messages posted by all the users, or empty list if there are no messages at all.
-     * List is sorted by time descending.
-     * */
+    else{Query query =
+            new Query("Message")
+                    .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+                    .addSort("timestamp", SortDirection.DESCENDING);
+    	results = datastore.prepare(query);
+    }
+    return createMessage(results);
+}
+  
+  /*
+   * Fetch messages from all users
+   *
+   * @return a list of messages posted by all the users, or empty list if there are no messages at all.
+   * List is sorted by time descending.
+   * */
     public List<Message> getAllMessages() {
         Query query = new Query("Message")
                 .addSort("timestamp", SortDirection.DESCENDING);
@@ -96,37 +93,36 @@ public class Datastore {
 
         return createMessage(results);
     }
-
-    /**
-     * Creating the message
-     *
-     * @return a list of messages.
-     * */
-    protected List<Message> createMessage(PreparedQuery results) {
-        List<Message> messages = new ArrayList<>();
-        for (Entity entity : results.asIterable()) {
-            try {
-                String idString = entity.getKey().getName();
-                UUID id = UUID.fromString(idString);
-                String user = (String) entity.getProperty("user");
-                String recipient = (String) entity.getProperty("recipient");
-                String text = (String) entity.getProperty("text");
-                long timestamp = (long) entity.getProperty("timestamp");
-                String tag = (String) entity.getProperty("tag");
-                ArrayList <String> solved = (ArrayList<String>) entity.getProperty("solved");
-                String imageUrl = (String) entity.getProperty("imageUrl");
-                String tag = (String) entity.getProperty("tag");
-
-                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl,solved);
-                messages.add(message);
-            } catch (Exception e) {
-                System.err.println("Error reading message.");
-                System.err.println(entity.toString());
-                e.printStackTrace();
-            }
-        }
-        return messages;
-    }
+/*
+ * Creating the message
+ *
+	 * @return a list of messages.
+ * */
+protected List<Message> createMessage(PreparedQuery results){
+  List<Message> messages = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      try {
+        String idString = entity.getKey().getName();
+        UUID id = UUID.fromString(idString);
+        String user= (String) entity.getProperty("user");
+        String recipient = (String) entity.getProperty("recipient");
+        String text = (String) entity.getProperty("text");
+        String tag = (String) entity.getProperty("tag");
+        long timestamp = (long) entity.getProperty("timestamp");
+        ArrayList<String> replies = (ArrayList<String>) entity.getProperty("replies");
+        ArrayList <String> solved = (ArrayList<String>) entity.getProperty("solved");
+        String imageUrl = (String) entity.getProperty("imageUrl");
+        
+        Message message = new Message(id, user, text, timestamp, recipient, tag, replies, imageUrl, solved);
+        messages.add(message);
+      } catch (Exception e) {
+        System.err.println("Error reading message.");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+  }
+  return messages;
+}
 
 
     /**
@@ -137,7 +133,6 @@ public class Datastore {
         PreparedQuery results = datastore.prepare(query);
         return results.countEntities(FetchOptions.Builder.withLimit(1000));
     }
-
 
     /**
      * Stores the User in Datastore.

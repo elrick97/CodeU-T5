@@ -18,9 +18,14 @@ package com.google.codeu.data;
 
 import java.util.UUID;
 import java.util.ArrayList; 
+import java.util.logging.Logger; 
+
 
 /** A single message posted by a user. */
 public class Message {
+
+  private static final Logger log =  
+      Logger.getLogger(Message.class.getName()); 
 
   private UUID id;
   private String user;
@@ -29,17 +34,18 @@ public class Message {
   private String recipient;
   private String imageUrl;
   private String tag;
-  private ArrayList<String> replies;
-  private ArrayList <String> solved; // email 
+  public ArrayList<String> replies;
+  private ArrayList <String> solved;
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text, String recipient, String tag, String imageUrl, ArrayList <String> solved) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, imageUrl, solved);
+
+  public Message(String user, String text, String recipient, String tag, ArrayList<String> replies, String imageUrl, ArrayList <String> solved) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, replies, imageUrl, solved);
   }
 
-  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, String imageUrl, ArrayList<String> solved) {
+  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, ArrayList<String> replies, String imageUrl, ArrayList<String> solved) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -47,7 +53,7 @@ public class Message {
     this.recipient = recipient;
     this.imageUrl = imageUrl;
     this.tag = tag;
-    this.replies = new ArrayList<String>();
+    this.replies = replies;
     this.solved = new ArrayList<String>();//email
   }
   
@@ -83,11 +89,24 @@ public class Message {
   }
 
   public void addReply(String replyText){
-    if (replyText != null) {
-      replies.add(replyText);
+    replies.add(replyText);
+  }
+
+  public void printReplies(){
+    for(String i : replies){
+      log.info("reply: "+i);
     }
   }
-  
+
+  public void printMessage(){
+    log.info("id: "+id);
+    log.info("user: "+user);
+    log.info("text: "+text);
+    log.info("time: "+timestamp);
+    log.info("recipient: "+recipient);
+    log.info("tag: "+tag);
+    printReplies();
+  }
   public ArrayList<String> getSolved(){
 	return solved;
   }
