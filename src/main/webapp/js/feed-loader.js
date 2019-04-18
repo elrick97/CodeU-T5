@@ -1,5 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
+const tagMap = new Map([["1" , "Strings"], ["2" , "Arrays"] ,["3", "Lists"], ["4", "Stacks"], ["5", "Queues"], ["6", "Trees"], 
+  ["7", "Graphs"], ["8", "Dynamic Programming"], ["9", "Divide and Conquer"]]);
 
   // Fetch messages and add them to the page.
 function fetchMessages(){
@@ -22,18 +24,46 @@ function fetchMessages(){
 }
   
 function buildMessageDiv(message){
+  let tagName = "No tag selected";
+  if (message.tag != null) {
+    tagName = tagMap.get(message.tag);
+  }
    const usernameDiv = document.createElement('h5');
    usernameDiv.classList.add("card-header");
    usernameDiv.appendChild(document.createTextNode(message.user));
-   
+
    const timeDiv = document.createElement('div');
    timeDiv.classList.add('card-header');
-   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+   let head = document.createElement("h6");
+   let node = document.createTextNode("Problem Type: " + tagName);
+   head.appendChild(node);
+   timeDiv.appendChild(head);
    
+   let date = new Date(message.timestamp).toLocaleDateString('en-US', {  
+      day : 'numeric',
+      month : 'short',
+      year : 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+   });
+   timeDiv.appendChild(document.createTextNode(date));
+   
+   var button = document.createElement("BUTTON");
+   button.innerHTML = "Solve";
+   button.style.backgroundColor = '#4CAF50';
+   button.style.color = "white";
+   button.style.borderRadius = "5px";
+   button.style.border = 'none';
+   button.style.margin = "10px 0 0 0";
+   button.onClick = function(){
+   	onSolveButtonClick();
+   }
+  
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
    headerDiv.appendChild(timeDiv);
+   headerDiv.appendChild(button);
    
    const bodyDiv = document.createElement('div');
    bodyDiv.classList.add('card-body');
@@ -121,3 +151,29 @@ function buildUI(){
   showMessageFormIfLoggedIn();
   fetchMessages();
 }
+
+function onSolveButtonClick(){
+	//post('/messages', message.UUID, "POST");
+	//button.style.color = '#fb5e50';	
+}
+
+/*function post(path, params, method){
+	var form = document.createElement("form");
+	form.setAttribute("method", method);
+	form.setAttribute("action", path);
+	
+	for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+	
+	document.body.appendChild(form);
+	form.submit();
+	}*/
+

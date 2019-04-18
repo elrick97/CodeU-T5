@@ -32,24 +32,29 @@ public class Message {
   private String text;
   private long timestamp;
   private String recipient;
+  private String imageUrl;
   private String tag;
   public ArrayList<String> replies;
+  private ArrayList <String> solved;
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text, String recipient, String tag, ArrayList<String> replies) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, replies);
+
+  public Message(String user, String text, String recipient, String tag, ArrayList<String> replies, String imageUrl, ArrayList <String> solved) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, tag, replies, imageUrl, solved);
   }
 
-  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, ArrayList<String> replies) {
+  public Message(UUID id, String user, String text, long timestamp, String recipient, String tag, ArrayList<String> replies, String imageUrl, ArrayList<String> solved) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp;
     this.recipient = recipient;
+    this.imageUrl = imageUrl;
     this.tag = tag;
     this.replies = replies;
+    this.solved = new ArrayList<String>();//email
   }
   
   public String getTag(){
@@ -75,6 +80,10 @@ public class Message {
     return timestamp;
   }
 
+  public String getImageUrl() { return imageUrl; }
+
+  public void setImageUrl(String curImageUrl) { imageUrl = curImageUrl; }
+  
   public ArrayList<String> getReplies(){
     return replies;
   }
@@ -88,6 +97,7 @@ public class Message {
       log.info("reply: "+i);
     }
   }
+
   public void printMessage(){
     log.info("id: "+id);
     log.info("user: "+user);
@@ -96,5 +106,8 @@ public class Message {
     log.info("recipient: "+recipient);
     log.info("tag: "+tag);
     printReplies();
+  }
+  public ArrayList<String> getSolved(){
+	return solved;
   }
 }
