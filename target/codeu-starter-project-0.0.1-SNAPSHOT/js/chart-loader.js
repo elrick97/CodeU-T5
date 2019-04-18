@@ -25,8 +25,8 @@ function drawChart() {
 
   // Set chart options
   var options = {'title':'Subdomain of Questions',
-                 'width':800,
-                 'height':650};
+                 'width':300,
+                 'height':300};
 
   // Instantiate and draw our chart, passing in some options.
   var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
