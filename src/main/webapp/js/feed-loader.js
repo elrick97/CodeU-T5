@@ -48,10 +48,22 @@ function buildMessageDiv(message){
    });
    timeDiv.appendChild(document.createTextNode(date));
    
+   var button = document.createElement("BUTTON");
+   button.innerHTML = "Solve";
+   button.style.backgroundColor = '#4CAF50';
+   button.style.color = "white";
+   button.style.borderRadius = "5px";
+   button.style.border = 'none';
+   button.style.margin = "10px 0 0 0";
+   button.onClick = function(){
+   	onSolveButtonClick();
+   }
+  
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
    headerDiv.appendChild(timeDiv);
+   headerDiv.appendChild(button);
    
    const bodyDiv = document.createElement('div');
    bodyDiv.classList.add('card-body');
@@ -113,3 +125,29 @@ function buildUI(){
   showMessageFormIfLoggedIn();
   fetchMessages();
 }
+
+function onSolveButtonClick(){
+	//post('/messages', message.UUID, "POST");
+	//button.style.color = '#fb5e50';	
+}
+
+/*function post(path, params, method){
+	var form = document.createElement("form");
+	form.setAttribute("method", method);
+	form.setAttribute("action", path);
+	
+	for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+	
+	document.body.appendChild(form);
+	form.submit();
+	}*/
+

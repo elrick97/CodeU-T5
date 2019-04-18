@@ -49,13 +49,12 @@ public class Datastore {
         messageEntity.setProperty("text", message.getText());
         messageEntity.setProperty("timestamp", message.getTimestamp());
         messageEntity.setProperty("recipient", message.getRecipient());
-
         messageEntity.setProperty("tag", message.getTag());
+        messageEntity.setProperty("solved", message.getSolved());
 
         if (message.getImageUrl() != null) {
             messageEntity.setProperty("imageUrl", message.getImageUrl());
         }
-
         datastore.put(messageEntity);
     }
 
@@ -67,12 +66,19 @@ public class Datastore {
      */
     public List<Message> getMessages(String recipient) {
         List<Message> messages = new ArrayList<>();
-
-        Query query =
+        PreparedQuery results;
+        if(recipient == null || recipient == "") {
+        	Query query =
+                    new Query("Message")
+                            .addSort("timestamp", SortDirection.DESCENDING);
+            results = datastore.prepare(query);
+        }
+        else{Query query =
                 new Query("Message")
                         .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
                         .addSort("timestamp", SortDirection.DESCENDING);
-        PreparedQuery results = datastore.prepare(query);
+        	results = datastore.prepare(query);
+        }
 
         return createMessage(results);
     }
@@ -107,11 +113,11 @@ public class Datastore {
                 String text = (String) entity.getProperty("text");
                 long timestamp = (long) entity.getProperty("timestamp");
                 String tag = (String) entity.getProperty("tag");
-
+                ArrayList <String> solved = (ArrayList<String>) entity.getProperty("solved");
                 String imageUrl = (String) entity.getProperty("imageUrl");
                 String tag = (String) entity.getProperty("tag");
 
-                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl);
+                Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl,solved);
                 messages.add(message);
             } catch (Exception e) {
                 System.err.println("Error reading message.");
