@@ -51,6 +51,7 @@ public class Datastore {
         messageEntity.setProperty("recipient", message.getRecipient());
         messageEntity.setProperty("tag", message.getTag());
         messageEntity.setProperty("solved", message.getSolved());
+
         if (message.getImageUrl() != null) {
             messageEntity.setProperty("imageUrl", message.getImageUrl());
         }
@@ -114,6 +115,7 @@ public class Datastore {
                 String tag = (String) entity.getProperty("tag");
                 ArrayList <String> solved = (ArrayList<String>) entity.getProperty("solved");
                 String imageUrl = (String) entity.getProperty("imageUrl");
+                String tag = (String) entity.getProperty("tag");
 
                 Message message = new Message(id, user, text, timestamp, recipient, tag, imageUrl,solved);
                 messages.add(message);
