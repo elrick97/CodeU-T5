@@ -14,7 +14,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>sp19-codeu-5-328</application>
   <version>1</version>
