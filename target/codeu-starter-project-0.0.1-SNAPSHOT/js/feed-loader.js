@@ -49,12 +49,35 @@ function buildMessageDiv(message){
    footerDiv.classList.add('card-footer');
    footerDiv.innerHTML = (new XMLSerializer()).serializeToString(commentStruct);
 
-   console.log(message);
+   const list = document.createElement('div');
+   list.classList.add('card');
+
+   const ulDiv = document.createElement('ul');
+   ulDiv.setAttribute('class', 'list-group list-group-flush');
+
+   const ar = message.replies;
+
+   const l = ar.length;
+
+   for(var i = 1; i < l; i++){
+    console.log(message.replies[i]);
+    const replies = buildReply(message.replies[i]);
+    ulDiv.appendChild(replies);
+   }
+   /*
+   message.replies.forEach((reply) =>{
+    const replies = buildReply(reply);
+    ulDiv.appendChild(replies);
+   });
+*/
+  list.appendChild(ulDiv);
+
 
    const messageDiv = document.createElement('div');
    messageDiv.classList.add("card");
    messageDiv.appendChild(headerDiv);
    messageDiv.appendChild(bodyDiv);
+   messageDiv.appendChild(list);
    messageDiv.appendChild(footerDiv);
 
    const formContainer = document.createElement('form');
@@ -63,6 +86,13 @@ function buildMessageDiv(message){
    formContainer.appendChild(messageDiv);
 
  return formContainer;
+}
+
+function buildReply(reply){
+  const footer = document.createElement('li');
+  footer.classList.add('list-group-item');
+  footer.innerHTML = reply;
+  return footer;
 }
 
 function showMessageFormIfLoggedIn() {

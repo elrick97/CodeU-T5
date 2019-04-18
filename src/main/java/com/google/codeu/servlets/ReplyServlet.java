@@ -43,7 +43,7 @@ public class ReplyServlet extends HttpServlet {
 
 	    String user = userService.getCurrentUser().getEmail();
 	    String replyText = request.getParameter("replyText");
-	    String text = user + ": " + replyText;
+	    String text = "<strong>"+user+"</strong>" + ": " + replyText;
 
 	    /*if(datastore == null){
 	    	init();
