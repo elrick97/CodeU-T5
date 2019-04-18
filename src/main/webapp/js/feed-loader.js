@@ -1,5 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
+const tagMap = new Map([["1" , "Strings"], ["2" , "Arrays"] ,["3", "Lists"], ["4", "Stacks"], ["5", "Queues"], ["6", "Trees"], 
+  ["7", "Graphs"], ["8", "Dynamic Programming"], ["9", "Divide and Conquer"]]);
 
   // Fetch messages and add them to the page.
 function fetchMessages(){
@@ -22,13 +24,29 @@ function fetchMessages(){
 }
   
 function buildMessageDiv(message){
+  let tagName = "No tag selected";
+  if (message.tag != null) {
+    tagName = tagMap.get(message.tag);
+  }
    const usernameDiv = document.createElement('h5');
    usernameDiv.classList.add("card-header");
    usernameDiv.appendChild(document.createTextNode(message.user));
-   
+
    const timeDiv = document.createElement('div');
    timeDiv.classList.add('card-header');
-   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+   let head = document.createElement("h6");
+   let node = document.createTextNode("Problem Type: " + tagName);
+   head.appendChild(node);
+   timeDiv.appendChild(head);
+   
+   let date = new Date(message.timestamp).toLocaleDateString('en-US', {  
+      day : 'numeric',
+      month : 'short',
+      year : 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+   });
+   timeDiv.appendChild(document.createTextNode(date));
    
    const headerDiv = document.createElement('div');
    headerDiv.classList.add('card-header');
