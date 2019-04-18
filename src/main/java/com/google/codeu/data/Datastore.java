@@ -61,7 +61,7 @@ public class Datastore {
     }
     datastore.put(messageEntity);
   }
-∫
+
   public List<Message> getMessages(String recipient) {
     List<Message> messages = new ArrayList<>();
     PreparedQuery results;
