@@ -139,7 +139,7 @@ function isBlockCode(message) {
   var patt1 = /```(.*)```/s;
   var result = str.match(patt1);
   if (result != null) {
-    message = message.replace(/```/s, "<pre class=\"prettyprint\"><code>").replace(/```/s, "</code></pre>");
+    message = message.replace(/```/s, "<pre class=\"ft-syntax-highlight\" data-syntax=\"js\" data-syntax-theme=\"one-dark\" data-ui-theme=\"MacOSX\"><code><BR>").replace(/```/s, "</code></pre>");
     return message;
   }else{
     return message;
