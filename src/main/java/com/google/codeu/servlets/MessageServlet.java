@@ -36,10 +36,14 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+import java.util.logging.Logger; 
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
+
+  private static final Logger log =  
+      Logger.getLogger(Message.class.getName()); 
 
   private Datastore datastore;
 
@@ -84,20 +88,18 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String userText = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
     /* Allows for image render via posting an image URL*/
-    StringBuffer text = new StringBuffer(userText);
+    StringBuffer text = new StringBuffer(request.getParameter("text"));
     int loc = (new String(text)).indexOf('\n');
     while(loc > 0){
       text.replace(loc, loc+1, "<BR>");
       loc = (new String(text)).indexOf('\n');
     }
-    userText = text.toString();
+    String userText = text.toString();
     String regexImgRecon = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
     String textWithImagesReplaced = userText.replaceAll(regexImgRecon, replacement);
-
     String finalCleanText = Jsoup.clean(textWithImagesReplaced, Whitelist.relaxed());
     String tag = request.getParameter("tag");
     ArrayList<String> replies = new ArrayList<String>();
@@ -119,6 +121,7 @@ public class MessageServlet extends HttpServlet {
     }
     */
     ArrayList<String> solved = (ArrayList<String>) request.getAttribute("solved");
+    log.info("FINAL CLEAN TEXT--------------- "+finalCleanText);
     Message message = new Message(user, finalCleanText, user, tag, replies, imageUrl, solved);
     datastore.storeMessage(message);
     response.sendRedirect("/feed.html");
