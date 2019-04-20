@@ -15,7 +15,7 @@
 indexes:
 - kind: Message
   properties:
-  - id: id
+  - name: id
   - name: user
   - name: recipient
   - name: timestamp
