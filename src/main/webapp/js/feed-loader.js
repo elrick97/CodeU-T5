@@ -63,7 +63,7 @@ function buildMessageDiv(message){
    headerDiv.classList.add('card-header');
    headerDiv.appendChild(usernameDiv);
    headerDiv.appendChild(timeDiv);
-   headerDiv.appendChild(button);
+   //headerDiv.appendChild(button);
    
    const bodyDiv = document.createElement('div');
    bodyDiv.classList.add('card-body');
