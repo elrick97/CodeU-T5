@@ -72,7 +72,7 @@ function buildMessageDiv(message){
 
    const messageID = message.id;
 
-  var xmlString = "<div class=\"input-group mb-3\"><input name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-secondary\" type=\"submit\">Comment</button></div></div>";
+  var xmlString = "<div class=\"input-group mb-3\"><input name=\"replyText\" type=\"text\" class=\"form-control\" placeholder=\"Write a comment\"><div class=\"input-group-append\"><button class=\"btn btn-outline-primary\" type=\"submit\">Comment</button></div></div>";
   const commentStruct = new DOMParser().parseFromString(xmlString, 'text/html');
 
    const footerDiv = document.createElement('div');
@@ -98,9 +98,10 @@ function buildMessageDiv(message){
   list.appendChild(ulDiv);
 
    const messageDiv = document.createElement('div');
-   messageDiv.classList.add("card");
+   messageDiv.setAttribute("class", "card border-primary mb-3");
    messageDiv.appendChild(headerDiv);
    messageDiv.appendChild(bodyDiv);
+   messageDiv.innerHTML += "<span class=\"badge badge-pill badge-primary\">Comments</span>";
    messageDiv.appendChild(list);
    messageDiv.appendChild(footerDiv);
 
