@@ -28,8 +28,9 @@ Coding Pool uses a number of open source projects to work properly:
 * **HTM/CSS/JavaScript** - Frontend
 * **Bootstrap** - Frontend
 
-## Collaborators
+## Contributors
 * @elrick97 - Ricardo Ramirez
 * @mahiSha123 - Mahima Sharma
 * @gonzalesdmg - David Gonzales
 * @sophiagiordano - Sophia Giordano
+* Special thanks to @tbiscuit - Tyson Jensen for advise and support us at all time.
