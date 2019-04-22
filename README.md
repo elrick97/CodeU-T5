@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://sp19-codeu-5-328.appspot.com)
 
-During 10 weeks, we collaborate virtually to develop a web app that was personally meaningful for us.  Along the way we were coached by a Google engineer as our team creates design documents, conducts code reviews and navigates complex technical challenges.
+During 10 weeks, we collaborated virtually to develop a web app that was personally meaningful for us.  Along the way we were coached by a Google engineer as our team creates design documents, conducts code reviews and navigates complex technical challenges.
 
 We also had the opportunity to better understand how to navigate the Computer Science space - professionally and academically.  The CodeU community is a long-lasting source of support for folks who are ready to challenge the status quo. The goal is to give us access to broad skills, deep knowledge and a robust network of peers and Googlers so that you can more readily carve your path within tech.
 
