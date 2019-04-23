@@ -35,8 +35,15 @@ function buildMessageDiv(message){
    const timeDiv = document.createElement('div');
    timeDiv.classList.add('card-header');
    let head = document.createElement("h6");
-   let node = document.createTextNode("Problem Type: " + tagName);
+   let node = document.createTextNode("Problem Type: ");
+
+   let tagType = document.createElement("span");
+   tagType.setAttribute("class", "badge badge-primary");
+   let tagNode = document.createTextNode(tagName);
+   tagType.appendChild(tagNode);
+
    head.appendChild(node);
+   head.appendChild(tagType);
    timeDiv.appendChild(head);
    
    let date = new Date(message.timestamp).toLocaleDateString('en-US', {  

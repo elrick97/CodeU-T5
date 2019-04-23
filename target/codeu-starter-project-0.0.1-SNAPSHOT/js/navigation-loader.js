@@ -40,8 +40,9 @@ function addLoginOrLogoutLinkToNavigation() {
           listElem.appendChild(createListItem(createLink(
               '/logout', 'Logout')));
         } else {
-          var xmlString = "<nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-primary\"><a class=\"navbar-brand\" href=\"#\">CodingPool</a><button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarCollapse\" aria-controls=\"navbarCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"></span></button><div class=\"collapse navbar-collapse\" id=\"navbarCollapse\"><ul class=\"navbar-nav mr-auto\"><li class=\"nav-item\"><a class=\"nav-link\" href=\"/logout\">Logout</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/login\">Login</a></li></ul></div></nav>";
+          var xmlString = "<nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-primary\"><a class=\"navbar-brand\" href=\"#\">CodingPool</a><button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarCollapse\" aria-controls=\"navbarCollapse\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"></span></button><div class=\"collapse navbar-collapse\" id=\"navbarCollapse\"><ul class=\"navbar-nav mr-auto\"><li class=\"nav-item\"><a class=\"nav-link\" href=\"/login\">Login</a></li></ul></div></nav>";
           const s = new DOMParser().parseFromString(xmlString, "text/xml");
+          navigationElement.innerHTML = (new XMLSerializer()).serializeToString(s);
           navigationElement.appendChild(
               createListItem(createLink('/login', 'Login')));
         }
