@@ -1,6 +1,6 @@
 # Google CodeU Spring 2019
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://sp19-codeu-5-328.appspot.com)
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://coding-pool-dot-sp19-codeu-5-328.appspot.com)
 
 During 10 weeks, we collaborated virtually to develop a web app that was personally meaningful for us.  Along the way we were coached by a Google engineer as our team creates design documents, conducts code reviews and navigates complex technical challenges.
 
