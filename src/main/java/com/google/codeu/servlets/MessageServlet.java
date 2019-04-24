@@ -120,7 +120,8 @@ public class MessageServlet extends HttpServlet {
       message.setImageUrl(imageUrl);
     }
     */
-    ArrayList<String> solved = (ArrayList<String>) request.getAttribute("solved");
+    ArrayList<String> solved = new ArrayList<String>();
+    solved.add("0");
     log.info("FINAL CLEAN TEXT--------------- "+finalCleanText);
     Message message = new Message(user, finalCleanText, user, tag, replies, imageUrl, solved);
     datastore.storeMessage(message);

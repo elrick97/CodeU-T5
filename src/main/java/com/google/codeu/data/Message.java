@@ -35,7 +35,7 @@ public class Message {
   private String imageUrl;
   private String tag;
   public ArrayList<String> replies;
-  private ArrayList <String> solved;
+  public ArrayList <String> solved;
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
@@ -54,7 +54,7 @@ public class Message {
     this.imageUrl = imageUrl;
     this.tag = tag;
     this.replies = replies;
-    this.solved = new ArrayList<String>();//email
+    this.solved = solved;//email
   }
   
   public String getTag(){
