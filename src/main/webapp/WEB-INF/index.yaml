@@ -21,4 +21,5 @@ indexes:
   - name: timestamp
   - name: tag
   - name: replies
+  - name: solved
     direction: desc
