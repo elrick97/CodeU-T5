@@ -14,19 +14,19 @@ import com.google.codeu.data.Message;
 
 @WebServlet("/questionchart")
 public class QuestionChartServelet extends HttpServlet {
-  private Datastore datastore;
+	private Datastore datastore;
 
-  @Override
-  public void init() {
-    datastore = new Datastore();
-  }
+	@Override
+	public void init() {
+		datastore = new Datastore();
+	}
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
-    List<Message> msgList = datastore.getMessages(null);
-    Gson gson = new Gson();
-    String json = gson.toJson(msgList);
-    response.getWriter().println(json);
-  }
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+		List<Message> msgList = datastore.getMessages(null);
+		Gson gson = new Gson();
+		String json = gson.toJson(msgList);
+		response.getWriter().println(json);
+	}
 }

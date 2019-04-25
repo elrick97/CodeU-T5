@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Problems Pool</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/css/user-page.css">
-	<script src="/js/feed-loader.js"></script>
-	<script src="/js/navigation-loader.js"></script>
-	<link rel="stylesheet" href="css/ft-syntax-highlight.css">
-	<script type="text/javascript">
-		function start(){
-			addLoginOrLogoutLinkToNavigation();
-			buildUI();
-		}
-	</script>
-</head>
-<body onload="start()">
-	<div id="navigation"></div>
-	<main class="container" role="main">
-		<div id="content">
-			<h1>Problems Pool</h1>
-			<hr/>
-			<form id="message-form" action="/messages" method="POST" class="hidden">
-				<div class="alert alert-primary" role="alert">
-  		      		- Share a Coding Interview problem 
-  		      		 <br>
-  		      		- To enter blocks of code place your code between ``` Block Code ```
-  		      		 <br>
-  		      		- Ask any question Computer Science related
-				</div>
-		      <textarea name="text" id="message-input"></textarea>
-		      <br/>
-		      <div class="form-row">
-		        <div class="col">
-		          <input type="submit" value="Submit" class="btn btn-primary">
-		        </div>
-		        <div class="col">
-		          <select class="custom-select" name="tag">
-		            <option selected>Select a Tag</option>
-		            <option value="1">Strings</option>
-		            <option value="2">Arrays</option>
-		            <option value="3">Lists</option>
-		            <option value="4">Stacks</option>
-		            <option value="5">Queues</option>
-		            <option value="6">Trees</option>
-		            <option value="7">Graphs</option>
-		            <option value="8">Dynamic Programming</option>
-		            <option value="9">Divide and Conquer</option>
-		          </select>
-		        </div>
-		      </div>
-		    </form>
-			<div id="message-container">Loading...</div>
-		</div>
-	</main>
-</body>
+	<head>
+		<title>Problems Pool</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/user-page.css">
+		<script src="/js/feed-loader.js"></script>
+		<script src="/js/navigation-loader.js"></script>
+		<link rel="stylesheet" href="css/ft-syntax-highlight.css">
+		<script type="text/javascript">
+			function start(){
+				addLoginOrLogoutLinkToNavigation();
+				buildUI();
+			}
+		</script>
+	</head>
+	<body onload="start()">
+		<div id="navigation"></div>
+		<main class="container" role="main">
+			<div id="content">
+				<h1>Problems Pool</h1>
+				<hr/>
+				<form id="message-form" action="/messages" method="POST" class="hidden">
+					<div class="alert alert-primary" role="alert">
+						- Share a Coding Interview problem 
+						<br>
+						- To enter blocks of code place your code between ``` Block Code ```
+						<br>
+						- Ask any question Computer Science related
+					</div>
+					<textarea name="text" id="message-input"></textarea>
+					<br/>
+					<div class="form-row">
+						<div class="col">
+							<input type="submit" value="Submit" class="btn btn-primary">
+						</div>
+						<div class="col">
+							<select class="custom-select" name="tag">
+								<option selected>Select a Tag</option>
+								<option value="1">Strings</option>
+								<option value="2">Arrays</option>
+								<option value="3">Lists</option>
+								<option value="4">Stacks</option>
+								<option value="5">Queues</option>
+								<option value="6">Trees</option>
+								<option value="7">Graphs</option>
+								<option value="8">Dynamic Programming</option>
+								<option value="9">Divide and Conquer</option>
+							</select>
+						</div>
+					</div>
+				</form>
+				<div id="message-container">Loading...</div>
+			</div>
+		</main>
+	</body>
 </html>

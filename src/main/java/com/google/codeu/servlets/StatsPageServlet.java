@@ -16,26 +16,26 @@ import com.google.gson.JsonObject;
 @WebServlet("/stats")
 public class StatsPageServlet extends HttpServlet{
 
-    private Datastore datastore;
+	private Datastore datastore;
 
-    @Override
-    public void init() {
-        datastore = new Datastore();
-    }
+	@Override
+	public void init() {
+		datastore = new Datastore();
+	}
 
-    /**
-     * Responds with site statistics in JSON.
-     */
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+	/**
+	 * Responds with site statistics in JSON.
+	 */
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
 
-        response.setContentType("application/json");
+		response.setContentType("application/json");
 
-        int messageCount = datastore.getTotalMessageCount();
+		int messageCount = datastore.getTotalMessageCount();
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("messageCount", messageCount);
-        response.getOutputStream().println(jsonObject.toString());
-    }
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("messageCount", messageCount);
+		response.getOutputStream().println(jsonObject.toString());
+	}
 }

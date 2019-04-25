@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ReplyServlet extends HttpServlet {
 
 	private static final Logger log =  
-      Logger.getLogger(ReplyServlet.class.getName()); 
+		Logger.getLogger(ReplyServlet.class.getName()); 
 
 	private Datastore datastore;
 
@@ -31,27 +31,27 @@ public class ReplyServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		UserService userService = UserServiceFactory.getUserService();
-	    if (!userService.isUserLoggedIn()) {
-	      response.sendRedirect("/index.html");
-	      return;
-	    }
+		if (!userService.isUserLoggedIn()) {
+			response.sendRedirect("/index.html");
+			return;
+		}
 
-	    List<Message> messages = datastore.getAllMessages();
-	 	String messageID = request.getParameter("mid");
+		List<Message> messages = datastore.getAllMessages();
+		String messageID = request.getParameter("mid");
 
-	    Message target = findMessage(messages, messageID);
+		Message target = findMessage(messages, messageID);
 
-	    String user = userService.getCurrentUser().getEmail();
-	    String replyText = request.getParameter("replyText");
-	    String text = "<strong>"+user+"</strong>" + ": " + replyText;
+		String user = userService.getCurrentUser().getEmail();
+		String replyText = request.getParameter("replyText");
+		String text = "<strong>"+user+"</strong>" + ": " + replyText;
 
-	    /*if(datastore == null){
-	    	init();
-	    }*/
-	    //target.printMessage();
-	    target.replies.add(text);
-	    datastore.storeMessage(target);
-        response.sendRedirect("/feed.html");
+		/*if(datastore == null){
+		  init();
+		  }*/
+		//target.printMessage();
+		target.replies.add(text);
+		datastore.storeMessage(target);
+		response.sendRedirect("/feed.html");
 	}
 
 	Message findMessage(List<Message> messages, String messageID){

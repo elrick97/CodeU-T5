@@ -21,7 +21,7 @@ import com.google.codeu.data.User;
 public class StatusServlet extends HttpServlet {
 
 	private static final Logger log =  
-      Logger.getLogger(ReplyServlet.class.getName()); 
+		Logger.getLogger(ReplyServlet.class.getName()); 
 
 	private Datastore datastore;
 
@@ -34,22 +34,22 @@ public class StatusServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		UserService userService = UserServiceFactory.getUserService();
-	    if (!userService.isUserLoggedIn()) {
-	      response.sendRedirect("/index.html");
-	      return;
-	    }
+		if (!userService.isUserLoggedIn()) {
+			response.sendRedirect("/index.html");
+			return;
+		}
 
-    	String userEmail = userService.getCurrentUser().getEmail();
-	    List<Message> messages = datastore.getAllMessages();
-	 	String messageID = request.getParameter("mid");
-	    Message target = findMessage(messages, messageID);
-	    if(!(target.solved.contains(userEmail))){
-		    target.solved.add(userEmail);
-		    datastore.storeMessage(target);
-	        response.sendRedirect("/feed.html");
-	    }else{
-	    	response.sendRedirect("/feed.html");
-	    }
+		String userEmail = userService.getCurrentUser().getEmail();
+		List<Message> messages = datastore.getAllMessages();
+		String messageID = request.getParameter("mid");
+		Message target = findMessage(messages, messageID);
+		if(!(target.solved.contains(userEmail))){
+			target.solved.add(userEmail);
+			datastore.storeMessage(target);
+			response.sendRedirect("/feed.html");
+		}else{
+			response.sendRedirect("/feed.html");
+		}
 	}
 	Message findMessage(List<Message> messages, String messageID){
 		for(Message message : messages){
